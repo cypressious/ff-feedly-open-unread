@@ -8,9 +8,9 @@ const observer = new MutationObserver(() => {
 
 function addButton(parent) {
     const button = document.createElement('button');
+    button.style.background = '#2bb24c';
     button.classList.add('secondary', 'open-unread');
     button.innerHTML = 'Open unread';
-    button.style.background = '#2bb24c';
     button.onclick = open;
 
     parent.insertBefore(button, parent.firstChild)
@@ -33,7 +33,7 @@ async function shouldMarkRead() {
 }
 
 async function open() {
-    const unread = document.getElementsByClassName('quicklisted');
+    const unread = document.getElementsByClassName('entry--unread');
 
     if (unread.length >= 5 && await shouldConfirmManyTabs() && !confirm(`Are you sure you want to open ${unread.length} tabs`)) {
         return;

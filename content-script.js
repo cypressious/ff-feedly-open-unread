@@ -8,6 +8,7 @@ const observer = new MutationObserver(() => {
 
 function addButton(parent) {
     const button = document.createElement('button');
+    button.style.background = '#2bb24c';
     button.classList.add('secondary', 'open-unread');
     button.innerHTML = 'Open unread';
     button.onclick = open;

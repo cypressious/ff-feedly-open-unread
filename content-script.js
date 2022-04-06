@@ -38,18 +38,17 @@ async function open() {
         return;
     }
 
-    for (let x of unread) {
-        // noinspection ES6MissingAwait
-        browser.runtime.sendMessage({
-            href: x.querySelector('a.entry__title').href
-        });
-    }
+    await Promise.all([...unread].map(x => browser.runtime.sendMessage({
+        href: x.querySelector('a.entry__title').href
+    })))
 
     if (await shouldMarkRead()) {
-        document.getElementsByClassName('MarkAsReadButton')[0].click();
+        const markAsReadDropdownTrigger = document.getElementsByClassName('MarkAsReadButton')[0];
+        markAsReadDropdownTrigger.click();
 
         await new Promise(resolve => requestAnimationFrame(resolve));
 
-        document.querySelector('li.MenuItem:nth-child(2)').click();
+        const markAllAsReadItem = markAsReadDropdownTrigger.parentElement.querySelector('li:nth-child(2)');
+        markAllAsReadItem.click();
     }
 }

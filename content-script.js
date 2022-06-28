@@ -1,14 +1,18 @@
-const observer = new MutationObserver(() => {
-    const parent = document.getElementsByClassName('actions-container');
+const BUTTON_ID = 'extension-open-unread';
 
-    if (parent.length && !parent[0].querySelector('.open-unread')) {
-        addButton(parent[0]);
+const observer = new MutationObserver(() => {
+    const parent = document.getElementsByClassName('MarkAsReadButton')[0]?.parentElement;
+
+    if (parent && !parent.querySelector(`#${BUTTON_ID}`)) {
+        addButton(parent);
     }
 });
 
 function addButton(parent) {
     const button = document.createElement('button');
-    button.classList.add('secondary', 'open-unread');
+    
+    button.id = BUTTON_ID
+    button.classList.add(...parent.querySelector('button').classList);
     button.innerHTML = 'Open unread';
     button.onclick = open;
 
@@ -44,11 +48,11 @@ async function open() {
 
     if (await shouldMarkRead()) {
         const markAsReadDropdownTrigger = document.getElementsByClassName('MarkAsReadButton')[0];
-        markAsReadDropdownTrigger.click();
+        markAsReadDropdownTrigger.querySelector('button').click();
 
         await new Promise(resolve => requestAnimationFrame(resolve));
 
-        const markAllAsReadItem = markAsReadDropdownTrigger.parentElement.querySelector('li:nth-child(2)');
+        const markAllAsReadItem = markAsReadDropdownTrigger.querySelector('li:nth-child(2)');
         markAllAsReadItem.click();
     }
 }

@@ -43,7 +43,7 @@ async function open() {
     }
 
     await Promise.all([...unread].map(x => browser.runtime.sendMessage({
-        href: x.querySelector('a.entry__title').href
+        href: x.querySelector('div.content > a').href
     })))
 
     if (await shouldMarkRead()) {

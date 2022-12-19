@@ -10,7 +10,7 @@ const observer = new MutationObserver(() => {
 
 function addButton(parent) {
     const button = document.createElement('button');
-    
+
     button.id = BUTTON_ID
     button.classList.add(...parent.querySelector('button').classList);
     button.innerHTML = 'Open unread';
@@ -43,7 +43,7 @@ async function open() {
     }
 
     await Promise.all([...unread].map(x => browser.runtime.sendMessage({
-        href: x.querySelector('a.entry__title').href
+        href: x.querySelector('.content > a').href
     })))
 
     if (await shouldMarkRead()) {

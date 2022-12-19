@@ -8,6 +8,7 @@ module.exports = {
         'bin',
         'obj',
         '*.iml',
-        'README.md'
+        'README.md',
+        '*.DotSettings.user'
     ],
 };
